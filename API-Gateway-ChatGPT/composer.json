@@ -1,0 +1,9 @@
+{
+    "name": "mario/api-gateway-chat-gpt",
+    "autoload": {
+        "psr-4": {
+            "Mario\\ApiGatewayChatGpt\\": "App/"
+        }
+    },
+    "require": {}
+}
