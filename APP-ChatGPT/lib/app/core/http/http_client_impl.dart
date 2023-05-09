@@ -12,7 +12,7 @@ class HttpClientImpl implements HttpClient {
   HttpClientImpl({required this.dio}) {
     this._baseUrl = kDebugMode
       ? "http://192.168.1.116/API-Gateway-ChatGPT"
-      : "https://chat-gpt-app.000webhostapp.com/api";
+      : "https://chat-gpt-app-web.000webhostapp.com/api";
     this.dio.interceptors.add(LogInterceptor(
       requestBody: true,
       responseBody: true,

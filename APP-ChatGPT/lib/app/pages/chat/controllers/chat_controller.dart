@@ -58,7 +58,6 @@ abstract class _ChatController with Store {
   @action
   Future<void> newQuestion(String question) async {
     try {
-      if (question.isEmpty) return;
       this.messages.addAll([
         MessageModel(
           content: question,

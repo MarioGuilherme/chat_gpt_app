@@ -125,6 +125,7 @@ class ChatPage extends StatelessWidget {
                                         ? null
                                         : () async {
                                           String question = this._questionEC.text.trim();
+                                          if (question.isEmpty) return;
                                           this._questionEC.text = "";
                                           await chatController.newQuestion(question);
                                           this._scrollToEnd();
