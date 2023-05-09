@@ -1,9 +1,9 @@
 import "dart:convert";
 
-import "package:chat_gpt_app/app/repositories/storage/storage_repository.dart";
+import "package:shared_preferences/shared_preferences.dart";
 
 import "package:chat_gpt_app/app/models/message_model.dart";
-import "package:shared_preferences/shared_preferences.dart";
+import "package:chat_gpt_app/app/repositories/storage/storage_repository.dart";
 
 class StorageRepositoryImpl implements StorageRepository {
   final String _keyStorage = "messages";
@@ -11,8 +11,8 @@ class StorageRepositoryImpl implements StorageRepository {
   @override
   Future<List<MessageModel>> getAllMessages() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String jsonString = prefs.getString(this._keyStorage)!;
-    return List<MessageModel>.from(jsonDecode(jsonString).map((json) => MessageModel.fromMap(Map<String, String>.from(json))));
+    String jsonString = prefs.getString(this._keyStorage) ?? "[]";
+    return List<MessageModel>.from(jsonDecode(jsonString).map((json) => MessageModel.fromMap(Map<String, dynamic>.from(json))));
   }
 
   @override

@@ -15,17 +15,19 @@ class MessageModel {
     this.isError = false
   });
 
-  Map<String, String> toMap() {
-    return <String, String>{
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
       "role": role.string,
-      "content": content
+      "content": content,
+      "isError": isError
     };
   }
 
-  factory MessageModel.fromMap(Map<String, String> map) {
+  factory MessageModel.fromMap(Map<String, dynamic> map) {
     return MessageModel(
-      role: map["role"]!.toEnumRole,
-      content: map["content"]!
+      role: (map["role"] as String).toEnumRole,
+      content: map["content"]!,
+      isError: map["isError"] ?? false
     );
   }
 

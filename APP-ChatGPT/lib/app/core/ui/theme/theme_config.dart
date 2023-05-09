@@ -1,6 +1,6 @@
-import "package:chat_gpt_app/app/core/ui/styles/colors_app.dart";
-import "package:chat_gpt_app/app/core/ui/styles/text_styles.dart";
 import "package:flutter/material.dart";
+
+import "package:chat_gpt_app/app/core/ui/styles/colors_app.dart";
 
 class ThemeConfig {
   ThemeConfig._();

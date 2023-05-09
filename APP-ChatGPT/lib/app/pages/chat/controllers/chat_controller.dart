@@ -1,4 +1,3 @@
-import "dart:convert";
 import "dart:developer";
 
 import "package:chat_gpt_app/app/repositories/storage/storage_repository.dart";
@@ -7,10 +6,10 @@ import "package:mobx/mobx.dart";
 import "package:chat_gpt_app/app/models/message_model.dart";
 import "package:chat_gpt_app/app/models/role.dart";
 import "package:chat_gpt_app/app/repositories/chat/chat_repository.dart";
-import "package:shared_preferences/shared_preferences.dart";
 
 part "chat_controller.g.dart";
 
+// ignore: library_private_types_in_public_api
 class ChatController = _ChatController with _$ChatController;
 
 abstract class _ChatController with Store {
@@ -29,8 +28,8 @@ abstract class _ChatController with Store {
   Future<void> loadMessagesFromStorage() async => this.messages.addAll(await this._storageRepository.getAllMessages());
 
   @action
-  void clearMessages() async {
-    this._storageRepository.saveQuestions([]);
+  Future<void> clearMessages() async {
+    await this._storageRepository.saveQuestions([]);
     this.messages.clear();
   }
 
@@ -43,7 +42,6 @@ abstract class _ChatController with Store {
       );
       this.isWaitingResponse = true;
       this.messages.last = await this._chatRepository.makeAQuestion([...this.messages.where((m) => m.role != Role.system)]);
-      await this._storageRepository.saveQuestions(this.messages);
     } on Exception catch (e, s) {
       log("Erro ao fazer pergunta ao CHAT GPT", error: e, stackTrace: s);
       this.messages.last = MessageModel(
@@ -52,6 +50,7 @@ abstract class _ChatController with Store {
         isError: true
       );
     } finally {
+      await this._storageRepository.saveQuestions(this.messages);
       this.isWaitingResponse = false;
     }
   }
@@ -72,7 +71,6 @@ abstract class _ChatController with Store {
       ]);
       this.isWaitingResponse = true;
       this.messages.last = await this._chatRepository.makeAQuestion([...this.messages.where((m) => m.role != Role.system)]);
-      await this._storageRepository.saveQuestions(this.messages);
     } on Exception catch (e, s) {
       log("Erro ao fazer pergunta ao CHAT GPT", error: e, stackTrace: s);
       this.messages.last = MessageModel(
@@ -81,6 +79,7 @@ abstract class _ChatController with Store {
         isError: true
       );
     } finally {
+      await this._storageRepository.saveQuestions(this.messages);
       this.isWaitingResponse = false;
     }
   }

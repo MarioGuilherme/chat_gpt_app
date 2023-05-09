@@ -20,7 +20,7 @@ class ChatRepositoryImpl implements ChatRepository {
         endpoint: Endpoint.makeAQuestion,
         data: messages.map((message) => message.toJson()).toList().toString()
       );
-      MessageModel newMessage = MessageModel.fromMap(Map<String, String>.from(result.data));
+      MessageModel newMessage = MessageModel.fromMap(Map<String, dynamic>.from(result.data));
       return newMessage;
     } on DioError catch (e, s) {
       log("Erro ao fazer pergunta ao CHAT GPT", error: e, stackTrace: s);

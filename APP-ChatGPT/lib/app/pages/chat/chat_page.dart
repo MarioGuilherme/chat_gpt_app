@@ -1,3 +1,4 @@
+import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:flutter_mobx/flutter_mobx.dart";
 import "package:provider/provider.dart";
@@ -9,7 +10,6 @@ import "package:chat_gpt_app/app/pages/chat/widgets/chat_gpt_app_card.dart";
 import "package:chat_gpt_app/app/pages/chat/widgets/chat_gpt_appbar.dart";
 import "package:chat_gpt_app/app/pages/chat/widgets/message_card.dart";
 import "package:chat_gpt_app/app/pages/chat/widgets/warning_rich_text.dart";
-import "package:shared_preferences/shared_preferences.dart";
 
 class ChatPage extends StatelessWidget {
   final OutlineInputBorder _outlineInputBorder = const OutlineInputBorder(borderSide: BorderSide(color: Colors.transparent));
@@ -98,7 +98,7 @@ class ChatPage extends StatelessWidget {
                 )
               ),
               Container(
-                height: 100,
+                height: kIsWeb ? 80 : 100,
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 9),
                 decoration: const BoxDecoration(border: Border(top: BorderSide(color: Color.fromRGBO(68, 70, 83, 1)))),
                 child: SingleChildScrollView(
@@ -150,7 +150,7 @@ class ChatPage extends StatelessWidget {
                                   child: Ink(
                                     child: IconButton(
                                       icon: const Icon(Icons.refresh, color: Colors.white),
-                                      onPressed: chatController.messages.isEmpty
+                                      onPressed: chatController.isWaitingResponse
                                         ? null
                                         : () async {
                                           await chatController.retryLastQuestion();
@@ -165,7 +165,7 @@ class ChatPage extends StatelessWidget {
                         ]
                       ),
                       const SizedBox(height: 4),
-                      const SizedBox(height: 29, child: WarningRichText())
+                      const WarningRichText()
                     ]
                   )
                 )

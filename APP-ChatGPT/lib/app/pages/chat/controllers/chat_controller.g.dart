@@ -41,6 +41,23 @@ mixin _$ChatController on _ChatController, Store {
     });
   }
 
+  late final _$loadMessagesFromStorageAsyncAction =
+      AsyncAction('_ChatController.loadMessagesFromStorage', context: context);
+
+  @override
+  Future<void> loadMessagesFromStorage() {
+    return _$loadMessagesFromStorageAsyncAction
+        .run(() => super.loadMessagesFromStorage());
+  }
+
+  late final _$clearMessagesAsyncAction =
+      AsyncAction('_ChatController.clearMessages', context: context);
+
+  @override
+  Future<void> clearMessages() {
+    return _$clearMessagesAsyncAction.run(() => super.clearMessages());
+  }
+
   late final _$retryLastQuestionAsyncAction =
       AsyncAction('_ChatController.retryLastQuestion', context: context);
 
@@ -55,20 +72,6 @@ mixin _$ChatController on _ChatController, Store {
   @override
   Future<void> newQuestion(String question) {
     return _$newQuestionAsyncAction.run(() => super.newQuestion(question));
-  }
-
-  late final _$_ChatControllerActionController =
-      ActionController(name: '_ChatController', context: context);
-
-  @override
-  void clearMessages() {
-    final _$actionInfo = _$_ChatControllerActionController.startAction(
-        name: '_ChatController.clearMessages');
-    try {
-      return super.clearMessages();
-    } finally {
-      _$_ChatControllerActionController.endAction(_$actionInfo);
-    }
   }
 
   @override
