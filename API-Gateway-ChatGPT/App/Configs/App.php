@@ -2,13 +2,11 @@
 
     declare(strict_types=1);
 
-    use Mario\ApiGatewayChatGpt\Core\Database;
-
     // IMPORTA O AUTOLOAD E AS CONSTANTES PARA CONFIGURAÇÕES DO SISTEMA
     require __DIR__ . "/../../vendor/autoload.php";
     require __DIR__ . "/Vars.php";
 
-    // use App\Database\Database;
+    use Mario\ApiGatewayChatGpt\Core\Database;
 
     // CONFIGURA EXIBIÇÃO DE ERROS, CONFIGURA D TIME ZONE E ESPECIFICAÇÕES LOCAIS E INICIA A SESSÃO
     ini_set("display_errors", (string) IS_DEV_ENV);
