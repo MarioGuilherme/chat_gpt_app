@@ -26,7 +26,7 @@
 
             try {
                 if ($_SERVER["REQUEST_METHOD"] != "POST") $this->returnJson(StatusCode::METHOD_NOT_ALLOWED);
-                (array) $options = [
+                curl_setopt_array($curl, [
                     CURLOPT_URL => API_CHAT_GPT->ENDPOINT,
                     CURLOPT_RETURNTRANSFER => true,
                     CURLOPT_HTTPHEADER => [
@@ -39,11 +39,16 @@
                         "messages" => $this->payload,
                         "temperature" => API_CHAT_GPT->TEMPERATURE
                     ])
-                ];
-                curl_setopt_array($curl, $options);
+                ]);
 
-                (object) $response = json_decode(curl_exec($curl));
-                // (object) $response = json_decode(" // Usado quando não há api key, retornando um json para teste
+                (string) $jsonString = curl_exec($curl);
+                (int) $httpStatusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+                if(curl_errno($curl) || $httpStatusCode != 200)
+                    throw new Exception("Erro ao enviar a requisição: " . (empty(curl_error($curl)) ? "Status Code: $httpStatusCode" : curl_error($curl)), StatusCode::INTERNAL_ERROR);
+
+                (object) $response = json_decode($jsonString);
+                // (object) $response = json_decode(" // Usado quando não há API Key, retornando um json para teste
                 //     {
                 //         \"id\": \"chatcmpl-6p9XYPYSTTRi0xEviKjjilqrWU2Ve\",
                 //         \"object\": \"chat.completion\",
@@ -62,9 +67,6 @@
                 //         ]
                 //     }
                 // ");
-
-                if(curl_errno($curl))
-                    throw new Exception("Erro ao enviar a requisição: " . curl_error($curl), StatusCode::INTERNAL_ERROR);
 
                 (string) $question = $this->payload[count($this->payload) - 1]->content;
                 (object) $answer = new Message("assistant", $response->choices[0]->message->content);
@@ -96,7 +98,7 @@
                         "date_time" => date("Y-m-d H:i:s")
                     ]);
                 };
-                // sleep(5);
+
                 $this->returnJson(StatusCode::OK, $answer);
             } catch (Exception $error) {
                 $this->saveLog($error->getMessage());
