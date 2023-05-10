@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:flutter_mobx/flutter_mobx.dart";
 import "package:provider/provider.dart";
 
 import "package:chat_gpt_app/app/core/ui/styles/colors_app.dart";
@@ -13,9 +14,13 @@ class ChatGPTAppBar extends AppBar {
       Builder(
         builder: (context) {
           final ChatController chatController = context.read<ChatController>();
-          return IconButton(
-            icon: const Icon(Icons.restore_from_trash, color: Colors.white),
-            onPressed: () => chatController.clearMessages()
+          return Observer(
+            builder: (_) => IconButton(
+              icon: const Icon(Icons.restore_from_trash, color: Colors.white),
+              onPressed: chatController.isWaitingResponse
+                ? null
+                : () => chatController.clearMessages()
+            )
           );
         }
       )
