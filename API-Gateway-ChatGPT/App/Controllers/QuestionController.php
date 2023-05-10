@@ -42,26 +42,26 @@
                 ];
                 curl_setopt_array($curl, $options);
 
-                // (object) $response = json_decode(curl_exec($curl));
-                (object) $response = json_decode("
-                    {
-                        \"id\": \"chatcmpl-6p9XYPYSTTRi0xEviKjjilqrWU2Ve\",
-                        \"object\": \"chat.completion\",
-                        \"created\": 1677649420,
-                        \"model\": \"gpt-3.5-turbo\",
-                        \"usage\": {\"prompt_tokens\": 56, \"completion_tokens\": 31, \"total_tokens\": 87},
-                        \"choices\": [
-                            {
-                                \"message\": {
-                                    \"role\": \"assistant\",
-                                    \"content\": \"The 2020 World Series was played in Arlington, Texas at the Globe Life Field, which was the new home stadium for the Texas Rangers.\"
-                                },
-                                \"finish_reason\": \"stop\",
-                                \"index\": 0
-                            }
-                        ]
-                    }
-                ");
+                (object) $response = json_decode(curl_exec($curl));
+                // (object) $response = json_decode(" // Usado quando não há api key, retornando um json para teste
+                //     {
+                //         \"id\": \"chatcmpl-6p9XYPYSTTRi0xEviKjjilqrWU2Ve\",
+                //         \"object\": \"chat.completion\",
+                //         \"created\": 1677649420,
+                //         \"model\": \"gpt-3.5-turbo\",
+                //         \"usage\": {\"prompt_tokens\": 56, \"completion_tokens\": 31, \"total_tokens\": 87},
+                //         \"choices\": [
+                //             {
+                //                 \"message\": {
+                //                     \"role\": \"assistant\",
+                //                     \"content\": \"The 2020 World Series was played in Arlington, Texas at the Globe Life Field, which was the new home stadium for the Texas Rangers.\"
+                //                 },
+                //                 \"finish_reason\": \"stop\",
+                //                 \"index\": 0
+                //             }
+                //         ]
+                //     }
+                // ");
 
                 if(curl_errno($curl))
                     throw new Exception("Erro ao enviar a requisição: " . curl_error($curl), StatusCode::INTERNAL_ERROR);
