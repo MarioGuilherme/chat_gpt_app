@@ -1,11 +1,11 @@
 {
-    "name": "chat_gpt_app",
-    "short_name": "chat_gpt_app",
+    "name": "Chat GPT App",
+    "short_name": "Chat GPT",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#333541",
     "theme_color": "#444653",
-    "description": "A new Flutter project.",
+    "description": "Versão do Chat GPT em mobile integrado com a API Chat completion.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
