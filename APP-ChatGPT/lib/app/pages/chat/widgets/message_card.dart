@@ -1,9 +1,9 @@
-import "package:chat_gpt_app/app/core/extensions/enum_extension.dart";
-import "package:chat_gpt_app/app/models/message_model.dart";
 import "package:flutter/material.dart";
 
+import "package:chat_gpt_app/app/core/extensions/enum_extension.dart";
 import "package:chat_gpt_app/app/core/ui/styles/colors_app.dart";
 import "package:chat_gpt_app/app/core/ui/styles/text_styles.dart";
+import "package:chat_gpt_app/app/models/message_model.dart";
 
 class MessageCard extends StatelessWidget {
   final MessageModel message;
